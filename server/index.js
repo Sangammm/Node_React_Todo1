@@ -4,27 +4,47 @@ var bodyParser = require("body-Parser");
 const path = require("path");
 var { mongoose } = require("./db/mongoose");
 var { Todo } = require("./models/todo");
-var { User } = require("./models/user");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname + "/index.html"));
-// });
 
 app.post("/addtodo", (req, res) => {
   var todo = new Todo({
     text: req.body.text
   });
   todo.save().then(
-    doc => {
-      res.send(doc);
+    () => {
+      Todo.find().then(
+        data => {
+          res.send(data);
+        },
+        e => {
+          res.status(400).send(e);
+        }
+      );
     },
     e => {
       res.status(400).send(e);
     }
   );
+});
+
+app.post("/delete", (req, res) => {
+  console.log("delete api");
+  console.log(req.body.id);
+
+  Todo.findByIdAndDelete(req.body.id, (err, todo) => {
+    console.log(todo);
+    Todo.find().then(
+      data => {
+        res.send(data);
+      },
+      e => {
+        res.status(400);
+        res.end();
+      }
+    );
+  });
 });
 
 app.get("/view", (req, res) => {
@@ -39,7 +59,7 @@ app.get("/view", (req, res) => {
   );
 });
 
-app.get("/find/:id", (req, res) => {
+app.get("/find ", (req, res) => {
   console.log(req.params.id);
   Todo.findById(req.params.id).then(
     data => {

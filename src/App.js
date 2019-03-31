@@ -23,7 +23,6 @@ class App extends Component {
       }
     })
       .then(res => {
-        console.log(res);
         if (res.ok) {
           return res.json();
         } else {
@@ -31,8 +30,27 @@ class App extends Component {
         }
       })
       .then(data => {
-        console.log(data);
-        this.setState({ Todos: data, iserror: true });
+        this.setState({ Todos: data, iserror: false });
+      });
+  };
+
+  delete = id => {
+    fetch("/delete", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: id
+      })
+    })
+      .then(res => {
+        if (res.ok) return res.json();
+        else this.setState({ iserror: true });
+      })
+      .then(data => {
+        this.setState({ Todos: data });
       });
   };
 
@@ -52,10 +70,16 @@ class App extends Component {
         text: this.state.name
       })
     })
-      .then(res => res.json())
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          this.setState({ iserror: true });
+        }
+      })
       .then(data => {
-        console.log(data);
-          this.Updatetodolist();
+        console.log("Aemjj");
+        this.setState({ Todos: data, iserror: false, text: "" });
       });
   };
 
@@ -67,14 +91,15 @@ class App extends Component {
             type="text"
             onChange={this.handleChange}
             placeholder="Ente text"
+            value={this.name}
           />
           <input type="submit" />
         </form>
 
         <div>
           <h1>Todos:</h1>
-          {this.state.iserror ? (
-            <Todolist todos={[...this.state.Todos]} />
+          {!this.state.iserror ? (
+            <Todolist todos={[...this.state.Todos]} delete={this.delete} />
           ) : (
             <h2>Error</h2>
           )}
