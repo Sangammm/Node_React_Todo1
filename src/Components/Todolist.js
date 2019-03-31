@@ -2,10 +2,10 @@ import React from "react";
 
 const Todolist = props => {
   return (
-    <ul>
+    <div>
       {props.todos.map(e => (
         <React.Fragment>
-          <li key={e._id}>
+          <div className="todos" key={e._id}>
             {e.text}
             <button
               onClick={() => {
@@ -14,10 +14,10 @@ const Todolist = props => {
             >
               Delete
             </button>
-          </li>
+          </div>
         </React.Fragment>
       ))}
-    </ul>
+    </div>
   );
 };
 

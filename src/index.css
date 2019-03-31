@@ -1,0 +1,15 @@
+.todos {
+  width: 200px;
+  height: 100px;
+  margin: 20px 20px;
+  border: 1px solid black;
+  padding: 5px;
+  position: relative;
+  font-style: italic;
+}
+
+button {
+  position: fixed;
+  float: right;
+  padding: 5px;
+}
