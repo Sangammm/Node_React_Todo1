@@ -21,15 +21,21 @@ const Todolist = props => {
             style={e.completed ? todostylegreen : todostylemetal}
           >
             {e.text}
-            <button
-              onClick={() => {
-                props.delete(e._id);
-              }}
-            >
-              <Icon type="delete" />
-            </button>
+            {e.completed ? (
+              <button
+                type="danger"
+                onClick={() => {
+                  props.delete(e._id);
+                }}
+              >
+                <Icon type="delete" />
+              </button>
+            ) : (
+              <React.Fragment />
+            )}
 
             <button
+              type="default"
               onClick={() => {
                 props.toggle(e._id, !e.completed);
               }}

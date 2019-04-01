@@ -8,11 +8,14 @@
   z-index: +1;
 }
 
-button {
+.todos button {
   padding: 5px;
   float: right;
   margin-right: 10px;
 }
-.todoroot {
-  float: left;
+
+.Login {
+  margin: auto;
+  max-width: 500px;
+  margin-top: 10%;
 }
