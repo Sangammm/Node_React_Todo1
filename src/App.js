@@ -54,6 +54,27 @@ class App extends Component {
       });
   };
 
+  toggle = (id, a) => {
+    fetch("/toggle", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        id: id,
+        completed: a
+      })
+    })
+      .then(res => {
+        if (res.ok) return res.json();
+        else this.setState({ iserror: true });
+      })
+      .then(data => {
+        this.setState({ Todos: data });
+      });
+  };
+
   handleChange = event => {
     this.setState({ name: event.target.value });
   };
@@ -99,7 +120,11 @@ class App extends Component {
         <div>
           <h1>Todos:</h1>
           {!this.state.iserror ? (
-            <Todolist todos={[...this.state.Todos]} delete={this.delete} />
+            <Todolist
+              todos={[...this.state.Todos]}
+              delete={this.delete}
+              toggle={this.toggle}
+            />
           ) : (
             <h2>Error</h2>
           )}

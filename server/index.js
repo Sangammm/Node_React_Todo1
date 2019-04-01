@@ -47,6 +47,21 @@ app.post("/delete", (req, res) => {
   });
 });
 
+app.post("/toggle", (req, res) => {
+  Todo.findByIdAndUpdate(req.body.id, { completed: req.body.completed }, () => {
+    Todo.find().then(
+      data => {
+        res.send(data);
+      },
+      err => {
+        console.log(err);
+        res.sendStatus(400);
+        res.end();
+      }
+    );
+  });
+});
+
 app.get("/view", (req, res) => {
   Todo.find().then(
     data => {
