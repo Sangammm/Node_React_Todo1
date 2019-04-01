@@ -154,7 +154,11 @@ class App extends Component {
                 <FormLabel>Password</FormLabel>
                 <FormControl type="password" placeholder="Password" />
               </FormGroup>
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={this.setState({ isloggedin: true })}
+              >
                 Login
               </Button>
             </Form>
